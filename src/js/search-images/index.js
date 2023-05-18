@@ -1,5 +1,5 @@
-import fetchImg from './fetch-images';
-import cardTemplate from '../templates/card-template.hbs'
+import fetchImg from '../search-images/fetch-images';
+import cardTemplate from '../templates/card-template.hbs';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
@@ -33,7 +33,7 @@ async function onSubmitSearchForm(e) {
   e.preventDefault();
   searchQuery = e.currentTarget.searchQuery.value;
 
-  if (searchQuery === '') {
+  if (searchQuery === ' ') {
     return;
   }
 }
@@ -80,7 +80,7 @@ loadMoreBtn.addEventListener('click', onClickLoadMoreBtn);
 
 async function onClickLoadMoreBtn() {
   currentPage += 1;
-  const response = await fetchImages(searchQuery, currentPage);
+  const response = await fetchImg(searchQuery, currentPage);
   renderCardImage(response.hits);
   lightbox.refresh();
   currentHits += response.hits.length;
